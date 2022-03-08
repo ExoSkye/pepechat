@@ -7,9 +7,9 @@ on:
     branches: [ main ]
 
 jobs:
-  x86-build:
+  build:
     runs-on: ubuntu-20.04
-    name: x86 Build
+    name: Build
 
     steps:
       - uses: actions/checkout@v2
@@ -20,48 +20,4 @@ jobs:
           cargo build
           cargo test
 
-  other-arch-build:
-    runs-on: ubuntu-20.04
-    strategy:
-      fail-fast: false
-      matrix:
-        arch: [armv7, aarch64, s390x, ppc64le]
-    
-    name: Non x86 Build
-    
-    steps:
-      - uses: actions/checkout@v2
-      - uses: ProtoByter/run-on-arch-action@v2.1.4
-        name: Build artifact
-        id: build
-        with:
-          arch: ${{ matrix.arch }}
-          distro: bullseye
-
-          githubToken: ${{ github.token }}
-          
-          # Will add artifact support later
-          
-          #setup: |
-          #  mkdir -p "${PWD}/artifacts"
-          #
-          #dockerRunArgs: |
-          #  --volume "${PWD}/artifacts:/artifacts"
-          #
-          #
-          #env: |
-          #  artifact_name: git-${{ matrix.distro }}_${{ matrix.arch }}
-
-          shell: /bin/sh
-          
-          install: |
-            apt update
-            apt install curl git -y
-            curl https://sh.rustup.rs -sSf | sh -s -- --profile minimal -y
-            
-          run: |
-            cd pepechat
-            cargo build
-            cargo test
-            
-          
+ 
