@@ -60,7 +60,6 @@ jobs:
             curl https://sh.rustup.rs -sSf | sh -s -- --profile minimal -y
             
           run: |
-            git clone https://github.com/ProtoByter/pepechat
             cd pepechat
             cargo build
             cargo test
