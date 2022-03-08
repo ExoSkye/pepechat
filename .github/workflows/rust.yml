@@ -25,7 +25,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        arch: [armv7, aarch64, s390x, ppc64le, riscv64]
+        arch: [armv7, aarch64, s390x, ppc64le]
     
     name: Non x86 Build
     
@@ -36,7 +36,7 @@ jobs:
         id: build
         with:
           arch: ${{ matrix.arch }}
-          distro: alpine_latest
+          distro: bullseye
 
           githubToken: ${{ github.token }}
           
@@ -55,7 +55,6 @@ jobs:
           shell: /bin/sh
           
           install: |
-            apk add cmd:curl
             curl https://sh.rustup.rs -sSf | sh -s -- --profile minimal -y
             
           run: |
